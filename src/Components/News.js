@@ -6,11 +6,10 @@ import "../Styles/News.css";
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 const News = (props)=> {
-
   const [state,setState] = useState({
     articles: [],
     loading: true,
-    totalResult:0
+    totalResult:0,
   })
   const [page,setPage] = useState(1);
 
@@ -21,7 +20,7 @@ const News = (props)=> {
 
   const updateNews = async ()=> {
     props.setProgress(10);
-    const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=c02d32e049e648a88ba02d87b95c3cc6&page=${page}&pageSize=${props.pageSize}`;
+    const url =`https://newsapi.org/v2/top-headlines?country=${props.country}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}&category=${props.category}`;
     let data = await fetch(url)
     props.setProgress(30);
     let parsedData = await data.json();
@@ -31,13 +30,14 @@ const News = (props)=> {
   }
   useEffect(()=>{
     document.title = `${capitalizeFirstLetter(props.category)} - Headlines`
-    updateNews()
+    updateNews();
+    // eslint-disable-next-line
   },[])
 
 
   const fetchMoreData = async ()=>{
     setPage(page + 1);
-    const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
+    const url =  `https://newsapi.org/v2/top-headlines?country=${props.country}&apiKey=${props.apiKey}&page=${page+1}&pageSize=${props.pageSize}&category=${props.category}`;
     setState({...state, loading: true })
     let data = await fetch(url)
     let parsedData = await data.json();
@@ -56,9 +56,9 @@ const News = (props)=> {
         >
           <div className="container">
           <div className="row">
-            {state.articles.map((element) => {
-              return <div key={element.url} className="col-md-4">
-                <NewsItem title={element.title ? element.title:""} description={element.description ? element.description : "Description not provided"} imageUrl={element.urlToImage ? element.urlToImage : ''} newsUrl={element.url} author={element.author} date={element.publishedAt} source={element.source.name} />
+            {state.articles.map((element,index) => {
+              return <div key={`${element.url}${index}`} className="col-md-4">
+                <NewsItem title={ element.title ? element.title : "" } description={element.description ? element.description : "Description not provided"} imageUrl={element.urlToImage ? element.urlToImage : ''} newsUrl={element.url} author={element.author} date={element.publishedAt} source={element.source.name} />
               </div>
             })}
           </div>
@@ -72,7 +72,7 @@ News.defaultProps = {
   country: 'in',
   pageSize: 9,
   category: 'general',
-  query: ''
+  query:''
 }
 
 News.propTypes = {
