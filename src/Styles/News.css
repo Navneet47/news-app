@@ -5,3 +5,6 @@
 .h5{
     margin: 25px 0;
 }
+.search-input:hover{
+    border-color: lightblue;
+}

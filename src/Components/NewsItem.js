@@ -14,7 +14,7 @@ const NewsItem = (props)=> {
               <h5 className="card-title">{title}</h5>
               <p className="card-text">{description.length > 88 ? description.slice(0,88)+"...":description}</p>
               <p className='card-text'><small className='text-muted'>By {author ? author:"Unknown"} on {new Date(date).toGMTString()}</small></p>
-              <a href={newsUrl} target="blank" className="btn btn-sm btn-dark">Read More</a>
+              <a href={newsUrl} target="blank" className="btn btn-sm btn-outline-danger">Read More</a>
             </div>
         </div>
       </div>

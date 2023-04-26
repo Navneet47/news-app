@@ -8,9 +8,9 @@ import { useState } from 'react';
 
 const App = () => {
 
-  const [progress, setProgres] = useState(0)
+  const [progress, setProgres] = useState(0);
   const pageSize = 6;
-  const apiKey = "c02d32e049e648a88ba02d87b95c3cc6"
+  const apiKey = "c02d32e049e648a88ba02d87b95c3cc6";
   const setProgress = (progressCount) => {
     setProgres(progressCount)
   }
